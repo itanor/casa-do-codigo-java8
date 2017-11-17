@@ -2,8 +2,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.OptionalDouble;
+
 import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.Collectors.toCollection;
@@ -47,6 +52,36 @@ public class Item7_6 {
       .max();
 
     System.out.println("Pontuação máxima: " + pontuacaoMaxima.getAsInt());
+
+    pontuacaoMedia = usuarios
+      .stream()
+      .mapToInt(Usuario::getPontos)
+      .average()
+      .orElse(0.0);
+
+    List<String> nomes = new ArrayList<>();
+
+    double m = nomes
+      .stream()
+      .mapToInt(String::length)
+      .average()
+      .orElse(0.0);
+      //.orElseThrow(IllegalStateException::new);
+    
+    System.out.println("m: " + m);
+
+    nomes
+      .stream()
+      .mapToInt(String::length)
+      .average()
+      .ifPresent(System.out::println);
+
+    Optional<String> nomeComMaisPontos = usuarios
+      .stream()
+      .max(comparingInt(Usuario::getPontos))
+      .map(Usuario::getNome);
+
+    System.out.println(nomeComMaisPontos.orElse("Jesus"));
   }
 }
 
