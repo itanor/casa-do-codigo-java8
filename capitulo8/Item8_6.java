@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.IntBinaryOperator;
 
+import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 public class Item8_6 {
@@ -53,6 +54,27 @@ public class Item8_6 {
       .collect(toList());
 
     tresPrimeiros.forEach(System.out::println);
+
+    System.out.println("each stream...");
+    Stream<String> s = Stream.empty();
+    s.limit(10).forEach(System.out::println);
+
+    Stream<Usuario> streamDeUsuarios = Stream.of(
+        new Usuario("marlene", 200), new Usuario("jezebel", 700));
+
+    System.out.println("Stream.of...");
+    Stream<Usuario> stream = Stream.of(
+        new Usuario("afanásio", 450), 
+        new Usuario("joca", 400)
+    );
+    stream
+      .filter(u -> u.getPontos() > 400)
+      .map(Usuario::getNome)
+      .forEach(System.out::println);
+
+    Stream
+      .concat(streamDeUsuarios, Stream.of(new Usuario("sâmila", 230)))
+      .forEach(System.out::println);
   }
 }
 
